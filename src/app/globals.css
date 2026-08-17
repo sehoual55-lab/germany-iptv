@@ -1,0 +1,442 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   SELF-HOSTED TYPEFACE — Plus Jakarta Sans (variable, SIL Open Font License)
+   Served from /public/fonts so no third-party font request is made.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("/fonts/plus-jakarta-sans-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url("/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ==========================================================================
+   GERMANY IPTV — DESIGN TOKENS
+   Dark navy / black canvas, German-inspired gold, red and white accents.
+   ========================================================================== */
+
+@theme {
+  --color-ink-950: #04060d;
+  --color-ink-900: #070b17;
+  --color-ink-850: #0a1020;
+  --color-ink-800: #0e1528;
+  --color-ink-700: #141d36;
+  --color-ink-600: #1d2947;
+
+  --color-gold-50: #fdf7e3;
+  --color-gold-200: #f6e2a6;
+  --color-gold-300: #efd07f;
+  --color-gold-400: #e5b849;
+  --color-gold-500: #d19f2a;
+  --color-gold-600: #a97c17;
+
+  --color-flag-red: #c8102e;
+  --color-flag-red-soft: #e3364f;
+
+  --color-mist-100: #f4f7fc;
+  --color-mist-300: #cfd8ea;
+  --color-mist-400: #a7b3cc;
+  --color-mist-500: #7e8caa;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --radius-card: 1.25rem;
+
+  --shadow-glow: 0 18px 60px -20px rgba(229, 184, 73, 0.35);
+  --shadow-soft: 0 24px 70px -30px rgba(2, 4, 12, 0.9);
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-drift: drift 18s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -10px, 0);
+    }
+  }
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(2%, -3%, 0) scale(1.06);
+    }
+  }
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  color: var(--color-mist-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-gold-400);
+  color: var(--color-ink-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold-300);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   COMPONENT UTILITIES
+   ========================================================================== */
+
+@utility glass {
+  background: linear-gradient(
+    150deg,
+    color-mix(in srgb, var(--color-ink-700) 78%, transparent),
+    color-mix(in srgb, var(--color-ink-900) 88%, transparent)
+  );
+  border: 1px solid color-mix(in srgb, var(--color-mist-400) 14%, transparent);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Heavier frosted panel — use where colour sits behind the card. */
+@utility glass-strong {
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--color-ink-700) 55%, transparent),
+    color-mix(in srgb, var(--color-ink-900) 62%, transparent)
+  );
+  border: 1px solid color-mix(in srgb, var(--color-mist-300) 18%, transparent);
+  backdrop-filter: blur(26px) saturate(140%);
+  -webkit-backdrop-filter: blur(26px) saturate(140%);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent);
+}
+
+@utility glass-soft {
+  background: color-mix(in srgb, var(--color-ink-800) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-mist-400) 10%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+@utility text-gradient-gold {
+  background: linear-gradient(
+    100deg,
+    var(--color-gold-200) 0%,
+    var(--color-gold-400) 45%,
+    #fff6dc 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility surface-grid {
+  background-image: linear-gradient(
+      color-mix(in srgb, var(--color-mist-400) 6%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-mist-400) 6%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Wider container for sections that should breathe out to the edges. */
+@utility wrap-wide {
+  width: 100%;
+  max-width: 96rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    padding-inline: 2rem;
+  }
+  .wrap-wide {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .wrap-wide {
+    padding-inline: 3rem;
+  }
+}
+
+/* ==========================================================================
+   NEON TREATMENT (pricing cards)
+   A masked gradient ring draws the lit edge; layered shadows do the bloom.
+   ========================================================================== */
+
+.neon-card {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(229, 184, 73, 0.16), transparent 62%),
+    linear-gradient(165deg, rgba(20, 29, 54, 0.72), rgba(7, 11, 23, 0.92));
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
+  box-shadow:
+    0 24px 70px -30px rgba(2, 4, 12, 0.95),
+    0 0 26px -12px rgba(229, 184, 73, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s ease;
+}
+
+/* Lit rim */
+.neon-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    150deg,
+    rgba(246, 226, 166, 0.85),
+    rgba(229, 184, 73, 0.25) 28%,
+    rgba(120, 140, 200, 0.18) 52%,
+    rgba(200, 16, 46, 0.35) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Soft bloom that sits behind the card */
+.neon-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  box-shadow: 0 0 32px -10px rgba(229, 184, 73, 0.5);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.neon-card:hover::after {
+  opacity: 1;
+}
+
+.neon-card:hover {
+  box-shadow:
+    0 30px 80px -32px rgba(2, 4, 12, 0.95),
+    0 0 44px -14px rgba(229, 184, 73, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Highlighted tier — brighter rim, permanent bloom, slow pulse */
+.neon-card-featured {
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(229, 184, 73, 0.26), transparent 64%),
+    linear-gradient(165deg, rgba(27, 38, 68, 0.78), rgba(9, 14, 28, 0.94));
+  box-shadow:
+    0 30px 80px -30px rgba(2, 4, 12, 0.95),
+    0 0 46px -12px rgba(229, 184, 73, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  animation: neon-pulse 4.5s ease-in-out infinite;
+}
+
+.neon-card-featured::before {
+  background: linear-gradient(
+    150deg,
+    rgba(255, 246, 220, 0.95),
+    rgba(229, 184, 73, 0.75) 35%,
+    rgba(229, 184, 73, 0.35) 60%,
+    rgba(200, 16, 46, 0.55) 100%
+  );
+  padding: 1.5px;
+}
+
+.neon-card-featured::after {
+  opacity: 1;
+  box-shadow: 0 0 60px -14px rgba(229, 184, 73, 0.7);
+}
+
+@keyframes neon-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 30px 80px -30px rgba(2, 4, 12, 0.95),
+      0 0 40px -14px rgba(229, 184, 73, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  50% {
+    box-shadow:
+      0 30px 80px -30px rgba(2, 4, 12, 0.95),
+      0 0 62px -10px rgba(229, 184, 73, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+}
+
+/* Neon chrome */
+.neon-badge {
+  box-shadow:
+    0 0 14px rgba(229, 184, 73, 0.6),
+    0 0 34px rgba(229, 184, 73, 0.35);
+}
+
+.neon-badge-red {
+  box-shadow:
+    0 0 14px rgba(227, 54, 79, 0.65),
+    0 0 34px rgba(200, 16, 46, 0.4);
+}
+
+.neon-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(229, 184, 73, 0.45),
+    rgba(229, 184, 73, 0.12),
+    transparent
+  );
+}
+
+.neon-step {
+  border: 1px solid rgba(229, 184, 73, 0.28);
+  background: rgba(229, 184, 73, 0.06);
+  color: var(--color-gold-200);
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.neon-step:hover:not(:disabled) {
+  border-color: rgba(229, 184, 73, 0.7);
+  color: #fff3d4;
+  box-shadow:
+    0 0 12px rgba(229, 184, 73, 0.45),
+    inset 0 0 10px rgba(229, 184, 73, 0.18);
+}
+
+.neon-btn {
+  box-shadow:
+    0 0 18px rgba(229, 184, 73, 0.45),
+    0 16px 45px -18px rgba(229, 184, 73, 0.75);
+}
+
+.neon-btn:hover {
+  box-shadow:
+    0 0 28px rgba(229, 184, 73, 0.7),
+    0 20px 55px -16px rgba(229, 184, 73, 0.9);
+}
+
+.neon-outline {
+  border: 1px solid rgba(229, 184, 73, 0.4);
+  color: var(--color-gold-200);
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.neon-outline:hover {
+  border-color: rgba(229, 184, 73, 0.85);
+  background: rgba(229, 184, 73, 0.08);
+  box-shadow:
+    0 0 20px rgba(229, 184, 73, 0.4),
+    inset 0 0 16px rgba(229, 184, 73, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon-card-featured {
+    animation: none;
+  }
+}
+
+/* Thin, unobtrusive scrollbar for the checkout modal */
+.modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-gold-400) 55%, transparent) transparent;
+}
+.modal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-gold-400) 45%, transparent);
+  border-radius: 999px;
+}

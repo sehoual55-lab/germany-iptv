@@ -30,7 +30,7 @@ var SHEET_NAME = 'Commandes';
 var SHARED_SECRET = '';
 
 /** Send yourself an e-mail for every new order. '' disables it. */
-var NOTIFY_EMAIL = '';
+var NOTIFY_EMAIL = 'xyz905391@gmail.com';
 
 /** Default value written into the "Statut" column. */
 var DEFAULT_STATUS = 'Nouveau';

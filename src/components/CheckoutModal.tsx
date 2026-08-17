@@ -146,6 +146,9 @@ export default function CheckoutModal({
       status: "Nouveau",
     };
 
+    // Logging is best-effort on purpose: if the Sheets webhook is unreachable
+    // we must NOT strand the customer, because the WhatsApp message itself
+    // carries every detail of the order.
     if (ORDER_WEBHOOK_URL) {
       try {
         // text/plain keeps this a "simple" request, so the browser skips the
@@ -154,11 +157,18 @@ export default function CheckoutModal({
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(payload),
+          keepalive: true,
         });
-      } catch {
-        setStatus("error");
-        return;
+      } catch (err) {
+        console.warn("[checkout] order logging failed, continuing anyway", err);
       }
+    }
+
+    // The only genuinely fatal case: nowhere to hand the customer over to.
+    const waDigits = WHATSAPP_NUMBER.replace(/[^0-9]/g, "");
+    if (ORDER_MODE === "whatsapp" && waDigits.length < 8) {
+      setStatus("error");
+      return;
     }
 
     setStatus("done");
@@ -174,8 +184,11 @@ export default function CheckoutModal({
           email: payload.email,
           phone: fullPhone,
         });
-        const to = WHATSAPP_NUMBER.replace(/[^0-9]/g, "");
-        window.open(`https://wa.me/${to}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+        window.open(
+          `https://wa.me/${waDigits}?text=${encodeURIComponent(msg)}`,
+          "_blank",
+          "noopener"
+        );
       } else {
         const active = PAYMENT_METHODS.find((m) => m.id === method);
         const url = new URL(active?.checkoutUrl || PAYMENT_CHECKOUT_URL);

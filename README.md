@@ -134,6 +134,11 @@ Don't change it to `application/json`.
 Leaving `ORDER_WEBHOOK_URL` empty is fine: checkout still works, it just skips
 the logging step.
 
+Logging is **best-effort**. If the Apps Script is unreachable the order is still
+handed over to WhatsApp — the message carries every detail, so a customer is
+never stranded by a spreadsheet outage. Failures are logged to the browser
+console (`[checkout] order logging failed`).
+
 ## 4. SEO
 
 Implemented out of the box:

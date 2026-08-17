@@ -22,9 +22,9 @@ export const SITE_NAME = "Germany IPTV";
 export const DOMAIN = "germany-iptv.online";
 export const SITE_URL = `https://${DOMAIN}`;
 
-export const SUPPORT_EMAIL = "support@germany-iptv.online";
-export const PHONE_NUMBER = "+49 000 0000000"; // placeholder — replace
-export const WHATSAPP_NUMBER = "+49 000 0000000"; // placeholder — replace
+export const SUPPORT_EMAIL = "xyz905391@gmail.com";
+export const PHONE_NUMBER = "+1 (661) 541-3954";
+export const WHATSAPP_NUMBER = "+1 (661) 541-3954";
 
 export const CURRENCY = "USD";
 export const CURRENCY_SYMBOL = "$";

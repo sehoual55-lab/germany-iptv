@@ -56,7 +56,7 @@ export const PACKAGE_12_PRICE = "84.99";
  *  3. PAYMENT
  * =========================================================================== */
 
-export const PAYMENT_PROVIDER = "paypal"; // "paypal" | "card" | "other"
+export const PAYMENT_PROVIDER = "card"; // "paypal" | "card" | "other"
 
 /**
  * Official, secure hosted checkout URL of your payment provider.
@@ -75,7 +75,7 @@ export interface PaymentMethod {
 }
 
 export const PAYMENT_METHODS: PaymentMethod[] = [
-  { id: "paypal", enabled: true },
+  { id: "paypal", enabled: false },
   { id: "card", enabled: true },
   { id: "other", enabled: true },
 ];
